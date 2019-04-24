@@ -9,7 +9,6 @@ import urllib.request
 import requests 
 import shutil
 
-
 options = Options()
 options.headless = True
 chrome_driver_path = r"C:\Users\NH\PycharmProjects\SeleniumTest\drivers\chromedriver.exe"
@@ -43,7 +42,7 @@ if __name__=="__main__":
     album_html = driver.page_source
     print("Comic successfully loaded")
     soup = BeautifulSoup(album_html,"lxml")
-    comic_name = soup.find("title").text.split("|")[0]
+    comic_name = soup.find("title").text.split("|")[0].strip()
     download_location = os.path.join(download_location,comic_name)
     os.mkdir(download_location)
     print("Finding comic's pages")
@@ -56,15 +55,9 @@ if __name__=="__main__":
     print("Found {} pages".format(len(page_urls)))
     for i in  range(len(page_urls)):
             pages.append((page_urls[i],i,download_location))
-    p = Pool(3)  # 3 threads in the pool
+    p = Pool(6)  # 3 threads in the pool
     p.starmap(fetch_image_url,pages)
     p.close()
     p.join()
     driver.quit()
-    print ("DONE")
-
-
-
-
-
-
+    print ("DONE ! Happy Reading ")
