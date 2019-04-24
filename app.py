@@ -55,7 +55,7 @@ if __name__=="__main__":
     print("Found {} pages".format(len(page_urls)))
     for i in  range(len(page_urls)):
             pages.append((page_urls[i],i,download_location))
-    p = Pool(6)  # 3 threads in the pool
+    p = Pool(3)  # 3 threads in the pool
     p.starmap(fetch_image_url,pages)
     p.close()
     p.join()
